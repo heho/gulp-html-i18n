@@ -4,7 +4,7 @@ path        = require 'path'
 async       = require 'async'
 log         = require 'fancy-log'
 Vinyl       = require 'vinyl'
-chalk       = require 'chalk'
+colors      = require 'ansi-colors'
 replaceExt  = require 'replace-ext'
 PluginError = require 'plugin-error'
 through     = require 'through2'
@@ -77,7 +77,7 @@ handleUndefined = (propName, opt) ->
   if opt.failOnMissing
     throw new Error "#{propName} not found in definition file!"
   else
-    log chalk.red "#{propName} not found in definition file!"
+    log colors.red "#{propName} not found in definition file!"
 
 #
 # Renders using Regex
@@ -206,7 +206,7 @@ getLangResource = (->
                 else
                   res[fileStem] = fileResource
               catch e
-                log chalk.red e.message
+                log colors.red e.message
 
             else if fs.statSync(filePath).isDirectory()
               res[fileName] = res[fileName] || {}
@@ -529,7 +529,7 @@ module.exports.validateJsonConsistence = (opt = {}) ->
 
     compare = (src, target, targetFilePath, compareKey) =>
       error = () =>
-        log chalk.red '"' + keyStack.join('.') + '" not consistence in files:' + EOL + filePath + EOL + targetFilePath
+        log colors.red '"' + keyStack.join('.') + '" not consistence in files:' + EOL + filePath + EOL + targetFilePath
         @emit 'error',
           new PluginError('gulp-html-i18n:validateJsonConsistence', 'validateJsonConsistence failed')
 

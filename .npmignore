@@ -1,0 +1,11 @@
+src/
+test/
+example/
+.idea/
+gulpfile.coffee
+.travis.yml
+.gitignore
+.nyc_output/
+coverage/
+coverage.lcov
+*.log

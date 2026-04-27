@@ -1,6 +1,9 @@
 # gulp-html-i18n
 Internationalize your HTML files with [gulp](http://gulpjs.com/)!
 
+> **Note:** This is a fork of [gulp-html-i18n](https://github.com/webyom/gulp-html-i18n) by Gary Wang,
+> maintained by [@heho](https://github.com/heho). Install: `npm install @heho/gulp-html-i18n`
+
 [![Build Status](https://travis-ci.org/webyom/gulp-html-i18n.svg?branch=master)](https://travis-ci.org/webyom/gulp-html-i18n)
 [![codecov](https://codecov.io/gh/webyom/gulp-html-i18n/branch/master/graph/badge.svg)](https://codecov.io/gh/webyom/gulp-html-i18n)
 

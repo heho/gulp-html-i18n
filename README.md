@@ -182,5 +182,6 @@ fallback | undefined | String | If given, will use the provided language as a fa
 inline | undefined | String | If given, will use the provided language to create an output file of the same name as input. For example, passing `inline: 'en-US'` for `index.html` will result in `index.html` with English replacements.
 langRegExp | /\${{ ?([\w\-\.]+) ?}}\$/g | RegExp | the regular expression used for matching the language tags.
 escapeQuotes | false | Boolean | If `true`, will replace `"` and `'` with `\\"` and `\\'`.
+templateLiterals | true | Boolean | If `false`, disables automatic upgrading of surrounding quotes to backticks when a translated value contains a JavaScript template expression (`${...}`).
 trace | false | Boolean | If `true`, will place comments in output HTML to show where the translated strings came from
 extendDefination | undefined | Function | return an object to extend the language defination

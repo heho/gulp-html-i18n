@@ -107,6 +107,67 @@ describe 'gulp-html-i18n', ->
 
             testTranslation sourceFile, validator, cb
 
+    describe 'template literals', ->
+        it 'upgrades double quotes to backticks when value contains ${...}', (cb) ->
+            createLocaleFiles
+                'en/new.json': '{ "greeting" : "Hello, ${name}!" }'
+
+            sourceFile = new Vinyl
+                base: BASE_DIR
+                path: path.join BASE_DIR, 'file.js'
+                contents: new Buffer 'var msg = "${{ new.greeting }}$";'
+
+            validator = (file) ->
+                file.path.should.equal path.join(BASE_DIR, 'file-en.js')
+                file.contents.toString().should.equal 'var msg = `Hello, ${name}!`;'
+
+            testTranslation sourceFile, validator, cb
+
+        it 'upgrades single quotes to backticks when value contains ${...}', (cb) ->
+            createLocaleFiles
+                'en/new.json': '{ "greeting" : "Hello, ${name}!" }'
+
+            sourceFile = new Vinyl
+                base: BASE_DIR
+                path: path.join BASE_DIR, 'file.js'
+                contents: new Buffer "var msg = '${{ new.greeting }}$';"
+
+            validator = (file) ->
+                file.path.should.equal path.join(BASE_DIR, 'file-en.js')
+                file.contents.toString().should.equal 'var msg = `Hello, ${name}!`;'
+
+            testTranslation sourceFile, validator, cb
+
+        it 'leaves quotes unchanged when value has no template expression', (cb) ->
+            createLocaleFiles
+                'en/new.json': '{ "greeting" : "Hello, world!" }'
+
+            sourceFile = new Vinyl
+                base: BASE_DIR
+                path: path.join BASE_DIR, 'file.js'
+                contents: new Buffer 'var msg = "${{ new.greeting }}$";'
+
+            validator = (file) ->
+                file.path.should.equal path.join(BASE_DIR, 'file-en.js')
+                file.contents.toString().should.equal 'var msg = "Hello, world!";'
+
+            testTranslation sourceFile, validator, cb
+
+        it 'leaves quotes unchanged when templateLiterals option is false', (cb) ->
+            createLocaleFiles
+                'en/new.json': '{ "greeting" : "Hello, ${name}!" }'
+
+            sourceFile = new Vinyl
+                base: BASE_DIR
+                path: path.join BASE_DIR, 'file.js'
+                contents: new Buffer 'var msg = "${{ new.greeting }}$";'
+
+            validator = (file) ->
+                file.path.should.equal path.join(BASE_DIR, 'file-en.js')
+                file.contents.toString().should.equal 'var msg = "Hello, ${name}!";'
+
+            testTranslation sourceFile, validator, cb, templateLiterals: false
+
     describe 'regex', ->
         it 'recursive replacement', (cb) ->
             createLocaleFiles

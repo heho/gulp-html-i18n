@@ -105,10 +105,10 @@ regexReplaceProperties = (langRegExp, delimiters, content, properties, opt, lv) 
       res = JSON.stringify objResArr[i]
       content = content.replace '"__GULP_HTML_I18N_OBJ_RES_' + i + '"', res
   if opt.templateLiterals isnt false
-    content = content.replace /"([^"]*\$\{[^}]+\}[^"]*)"/g, (match, inner) ->
-      '`' + inner + '`'
-    content = content.replace /'([^']*\$\{[^}]+\}[^']*)'/g, (match, inner) ->
-      '`' + inner + '`'
+    content = content.replace /"([^"]*)"/g, (match, inner) ->
+      if /\$\{[^}]+\}/.test(inner) then '`' + inner + '`' else match
+    content = content.replace /'([^']*)'/g, (match, inner) ->
+      if /\$\{[^}]+\}/.test(inner) then '`' + inner + '`' else match
   content
 
 #

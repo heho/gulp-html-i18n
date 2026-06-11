@@ -168,6 +168,20 @@ describe 'gulp-html-i18n', ->
 
             testTranslation sourceFile, validator, cb, templateLiterals: false
 
+        it 'does not match across unquoted ${...} between two plain strings', (cb) ->
+            createLocaleFiles
+                'en/new.json': '{ "label" : "static" }'
+
+            sourceFile = new Vinyl
+                base: BASE_DIR
+                path: path.join BASE_DIR, 'file.js'
+                contents: new Buffer 'var a = "${{ new.label }}$"; fn(${x}); var b = "other";'
+
+            validator = (file) ->
+                file.contents.toString().should.equal 'var a = "static"; fn(${x}); var b = "other";'
+
+            testTranslation sourceFile, validator, cb
+
     describe 'regex', ->
         it 'recursive replacement', (cb) ->
             createLocaleFiles
